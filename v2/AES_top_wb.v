@@ -20,13 +20,13 @@ module AES_top_wb #(
     // Wishbone Slave ports (WB MI A)
     input wb_clk_i,
     input wb_rst_i,
-    input wbs_stb_i,//slave selection 
-    input wbs_cyc_i,//indicates bus cycle is in progress  
+    input wbs_stb_i,
+    input wbs_cyc_i, 
     input wbs_we_i,//high for write
-    input [3:0] wbs_sel_i,//indicates where valid data is during r/w cycles on data_out/data_in. GET IT AS 4'B1111;
+    input [3:0] wbs_sel_i,
     input [31:0] wbs_dat_i, //MSB FIRST   
     input [31:0] wbs_adr_i, 
-    output wbs_ack_o,//termination of a bus cycle
+    output wbs_ack_o,
     output [31:0] wbs_dat_o
 
     //Logic Analyzer Signals
@@ -64,12 +64,12 @@ reg [3:0] i ;
 //fsm states
 reg [2:0] state;
 reg [2:0] IDLE=3'd0;                   
-reg [2:0] COLLECT_DATA=3'd1;//
+reg [2:0] COLLECT_DATA=3'd1;
 reg [2:0] CONTROL=3'd2;
-reg [2:0] WAITFORPROCESS=3'd3;//send to AEScore and wait till Enc/Dec completed. raise cyc
+reg [2:0] WAITFORPROCESS=3'd3;
 reg [2:0] DRIVETOBUS=3'd4;
 reg [2:0] DRIVECONTROL=3'd5;
-reg [2:0] TERMINATE=3'd6;// raise ack
+reg [2:0] TERMINATE=3'd6;
 reg [2:0] RESET=3'd7;
 
 assign wbs_ack_o = wbsack;
