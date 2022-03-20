@@ -54,8 +54,8 @@ uint32_t aes_read_result(uint32_t* out){
 int aes_test()
 {
     int i;
-    uint32_t data[4] = {0x1234,0x1234,0x1234,0x1234};
-    uint32_t key[4] = {0x1234,0x1234,0x1234,0x1234};
+    uint32_t data[4] = {0x12345678,0x12345678,0x12345678,0x12345678};
+    uint32_t key[4] = {0x12345678,0x12345678,0x12345678,0x12345678};
     uint32_t out_enc[4];
     uint32_t out_data[4];
     aes_start_enc(data,key);
