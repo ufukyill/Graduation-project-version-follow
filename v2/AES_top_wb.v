@@ -22,7 +22,7 @@ module AES_top_wb #(
     input wb_rst_i,
     input wbs_stb_i,
     input wbs_cyc_i, 
-    input wbs_we_i,//high for write
+    input wbs_we_i,
     input [3:0] wbs_sel_i,
     input [31:0] wbs_dat_i, //MSB FIRST   
     input [31:0] wbs_adr_i, 
@@ -48,7 +48,6 @@ wire completedFlag;
 wire [127:0] aes_out;
 reg [127:0] key_in;
 reg [127:0] text;
-//reg [31:0] adrholder[0:4];
 reg [31:0] dataholder[0:8];
 reg en;
 reg EncDec;//EncDec=1 for encryption, dec otherwise 
