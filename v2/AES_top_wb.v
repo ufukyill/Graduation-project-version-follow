@@ -29,7 +29,7 @@ module AES_top_wb #(
     output wbs_ack_o,//termination of a bus cycle
     output [31:0] wbs_dat_o
 
-  /*  // Logic Analyzer Signals
+    //Logic Analyzer Signals
     input  [127:0] la_data_in,
     output [127:0] la_data_out,
     input  [127:0] la_oenb,
@@ -40,7 +40,7 @@ module AES_top_wb #(
     output [`MPRJ_IO_PADS-1:0] io_oeb,
 
     // IRQ
-    output [2:0] irq //not going to use(?)*/
+    output [2:0] irq 
 );
 
 //Signals
@@ -115,17 +115,17 @@ always @(posedge wb_clk_i ) begin
 
     rst=wb_rst_i;
    
-    if ( wbs_stb_i && wbs_cyc_i &&(wbs_adr_i ==32'h30000000) && (wbs_sel_i == 4'hF) ) begin //slave selected 
+    if ( wbs_stb_i && wbs_cyc_i &&(wbs_adr_i ==32'h30000000) && (wbs_sel_i == 4'hF) ) begin 
         case (state)
         
             IDLE: begin 
                 if (wbs_stb_i) begin
                     wbsack = 1'b1;
                     rst=0;
-                    if (wbs_we_i   )  begin//master is going to write data
+                    if (wbs_we_i   )  begin
                         wbsack=1'b0;
                         state= COLLECT_DATA;
-                    end else if (!wbs_we_i  ) begin //CYC SİNYALİ STROBE İLE BERABER YÜKSELİYOR. DÜZELTİP TEST ET
+                    end else if (!wbs_we_i  ) begin 
                         wbsack=1'b0;
                         state= DRIVETOBUS;
                     end else begin
@@ -143,7 +143,7 @@ always @(posedge wb_clk_i ) begin
                     wbsack=1'b1;
                 end else begin
                     if(dataholder[8][27:24] == 4'hE) begin
-                        en=1'b1;//else case ???
+                        en=1'b1;
                     end else begin//enable needed
                         state=RESET;
                     end
@@ -182,15 +182,14 @@ always @(posedge wb_clk_i ) begin
             
             COLLECT_DATA: begin //collect data in the holders
                 
-                //adrholder[index][31:0] <= wbs_adr_i;
+
                  dataholder[index]<=wbs_dat_i;
                 index=index+1'b1;
-                //wbsack=1'b1;
                 state=CONTROL;
             end
 
             WAITFORPROCESS: begin
-                //wbsack=1'b0;
+              
                 
                 if (completedFlag) begin
                     state= IDLE;
@@ -203,8 +202,6 @@ always @(posedge wb_clk_i ) begin
 
             DRIVETOBUS: begin
                 
-                //wbsdataout <= aes_out[(127-(8*idrive)):(127-(8*idrive)-31)];
-                //RANGE MUST BE BOUNDED BY CONSTANT EXPRESSIONS
                 wbsdataout <= aes_out[127-(32*idrive) -:32];
                 idrive=idrive+1'b1;
                 state= DRIVECONTROL;
@@ -229,9 +226,7 @@ always @(posedge wb_clk_i ) begin
               
                 rst=1;
                 
-             /* for (i=0;i<5 ;i=i+1'b1 ) begin
-                    adrholder[i]=32'b0;
-                end*/
+
                 for (i=0; i<4'd9 ;i=i+1'b1 ) begin
                     dataholder[i]=32'b0;
                 end
