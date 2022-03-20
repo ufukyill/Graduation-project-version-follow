@@ -107,12 +107,17 @@ initial begin
 end
 
 always @(negedge wbs_stb_i) begin
-    wbsack=0;
+    wbsack<=0;
+end
+always @(posedge wb_clk_i ) begin
+    if (wb_rst_i) begin
+        wbsack<=0;
+    end
 end
 always @(posedge wb_clk_i ) begin
     
 
-    rst=wb_rst_i;
+    rst<=wb_rst_i;
    
     if ( wbs_stb_i && wbs_cyc_i &&(wbs_adr_i ==32'h30000000) && (wbs_sel_i == 4'hF) ) begin 
         case (state)
