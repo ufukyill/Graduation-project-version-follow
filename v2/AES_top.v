@@ -15,16 +15,10 @@ module AES_top(
 reg encFlag;
 reg [127:0] enckey;
 reg [127:0] encDataIn;
-//reg [127:0] encDataOut;
-//reg dataEncryptedFlag;
-
 
 reg decFlag;
 reg [127:0] deckey;
 reg [127:0] decDataIn;
-//reg [127:0] decDataOut;
-//reg dataDecryptedFlag;
-
 wire [127:0] out;
 wire [127:0] out2;
 wire finishflag;
@@ -70,19 +64,12 @@ decryption decryptAES(
 );
 
 initial begin
-    // set variables to inital value
     state=4'd0;
-   
     enckey=0;
     encDataIn=0;
-    //encDataOut=0;
     encFlag=0;    
-    //dataEncryptedFlag=0;
-    
     deckey=0;
-    //dataDecryptedFlag=0;
     decDataIn=0;
-    //decDataOut=0;
     decFlag=0;
    
 end
@@ -106,7 +93,7 @@ always @(posedge clock ) begin
                 encDataIn=data_in;
                 enckey = key;
                 encFlag = 1 ;
-                //wait (finishflag==1'b1) state= FINISH_enc;
+                
                 state = WAITFORENC;
             end
             
@@ -146,14 +133,9 @@ always @(posedge clock ) begin
 
                 enckey=0;
                 encDataIn=0;
-               // encDataOut=0;
                 encFlag=0;    
-                //dataEncryptedFlag=0;
-                
                 deckey=0;
-                //dataDecryptedFlag=0;
                 decDataIn=0;
-               // decDataOut=0;
                 decFlag=0;
                 state=IDLE;
             end
