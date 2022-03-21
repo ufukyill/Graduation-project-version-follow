@@ -1,7 +1,3 @@
-// This is AES KeyCreation module. On the postative edge of startTransition the
-// module will create 11 round keys. Due to roundKey1 equaling roundKeyInput, and
-// the duration of two clock cyles per roundKey, with IDLE taken into consideration
-// it will take 21 clock cycles to complet all the roundKeys.
 
 module key_creation #(
   parameter numKeys = 11
